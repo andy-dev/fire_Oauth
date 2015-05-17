@@ -3,37 +3,25 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-  .controller('LandingPageController', ['$firebase', '$scope', '$firebaseAuth', '$location',
-    function($firebase, $scope, $firebaseAuth, $location){
+  .controller('LandingPageController', ['$scope', 'Auth', '$location',
+    function($scope, Auth, $location){
 
-
-      var ref = new Firebase("https://cooloauth.firebaseio.com");
-      var auth = $firebaseAuth(ref)
-      $scope.getLogin = function (){
-
-
-        auth.$authWithOAuthPopup("facebook").then(function(authData) {
-          console.log("Logged in as:", authData.uid);
-
-          $location.path('/main')
-
-          console.log(data);
-          }).catch(function(error) {
-          console.log("Authentication failed:", error);
-        });
-      }
+      $scope.auth = Auth;
+      $scope.auth.$onAuth(function(authData) {
+        $scope.authData = authData;
+      });
 
       $scope.logout = function(){
-        console.log ("effective logout")
-        ref.unauth();
-      }
 
-  }])
+        Auth.$unauth();
+        console.log("here after logout")
+      }
+    }
+  ])
   .controller('MainPageController', ['$firebase', '$scope',
     function($firebase,$scope){
       var refer = new Firebase('https://cooloauth.firebaseio.com/')
-
-  }])
+  }]);
 
 
 

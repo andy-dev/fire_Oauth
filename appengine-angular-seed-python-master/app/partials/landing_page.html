@@ -1,10 +1,18 @@
 <div class="container">
 
-  <div class="starter-template">
+  <div ng-app="myApp" ng-controller="LandingPageController" class="starter-template">
     <h1>Oauth YEAH</h1>
     <p class="lead">Login/Register say What?</p>
-    <a ng-click = "getLogin()"id = "fblogin" class="btn btn-primary btn-lg " role="button">Register</a>
-    <a ng-click = "logout()"id = "fblogout" class="btn btn-primary btn-lg " role="button">Logout</a>
+
+    <div ng-show="authData">
+      <p>Hello, {{authData.facebook.displayName}}</p>
+      <button  ng-click="logout()" class="btn btn-primary btn-lg"> Logout </button>
+    </div>
+
+    <div ng-hide="authData">
+      <button ng-click = "auth.$authWithOAuthPopup('facebook')" class="btn btn-primary btn-lg"> Login With Facebook </button>
+    </div>
+
   </div>
 
   <div class="row">
@@ -21,5 +29,6 @@
       <p>Yes, it is this easy</p>
     </div>
   </div>
+  <div id="fb-root"></div>
 
 </div>
